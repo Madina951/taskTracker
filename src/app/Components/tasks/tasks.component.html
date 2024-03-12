@@ -2,40 +2,46 @@
     <h1>Tasks</h1>
 
     <div class="content">
-        <button mat-raised-button extended (click)="createNewTask()" color="primary">
-            <mat-icon>add</mat-icon>
-            Add new
-        </button>
 
         <ng-container *ngIf="filter$|async as filter">
 
-            <mat-form-field class="taskForm-item">
-                <mat-label>Priority</mat-label>
-                <mat-select [(ngModel)]="filter.status" (ngModelChange)="applyStatusFilter(filter.status)">
-                    @for (priority of priorities; track priority) {
-                    <mat-option [value]="priority">{{priority}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="taskForm-item">
-                <mat-label>Executors</mat-label>
-                <mat-select multiple [(ngModel)]="filter.executors" (ngModelChange)="applyExecutorsFilter(filter.executors)">
-                    @for (executor of executorsList; track executor) {
-                    <mat-option [value]="executor.name">{{executor.name}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="taskForm-item">
-                <mat-label>Deadline</mat-label>
-                <input matInput [matDatepicker]="picker" [(ngModel)]="filter.deadline" (ngModelChange)="applyDeadlineFilter(filter.deadline)">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+            <div class="content-filters">
+                <button mat-raised-button extended (click)="createNewTask()" color="accent">
+                    <mat-icon>add</mat-icon>
+                    Add new
+                </button>
+                <div class="content-filters__item">
+                    <mat-form-field>
+                        <mat-label>Priority</mat-label>
+                        <mat-select [(ngModel)]="filter.status" (ngModelChange)="applyStatusFilter(filter.status)">
+                            @for (priority of priorities; track priority) {
+                            <mat-option [value]="priority">{{priority}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Executors</mat-label>
+                        <mat-select multiple [(ngModel)]="filter.executors"
+                            (ngModelChange)="applyExecutorsFilter(filter.executors)">
+                            @for (executor of executorsList; track executor) {
+                            <mat-option [value]="executor.name">{{executor.name}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Deadline</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="filter.deadline"
+                            (ngModelChange)="applyDeadlineFilter(filter.deadline)">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
 
         </ng-container>
 
         <ng-container *ngIf="tasks$|async as tasks">
-              
+
             <table class="content-table" mat-table [dataSource]="tasks">
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> Id </th>
@@ -48,18 +54,22 @@
                 </ng-container>
 
                 <ng-container matColumnDef="deadline">
-                    <th mat-header-cell *matHeaderCellDef (click)="sortTasks('deadline')"> Deadline <mat-icon>swap_vert</mat-icon></th>
+                    <th mat-header-cell *matHeaderCellDef (click)="sortTasks('deadline')"> Deadline 
+                        <mat-icon class="content-table__item">swap_vert</mat-icon></th>
                     <td mat-cell *matCellDef="let element"> {{element.deadline |date: "dd/MM/yyyy"}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="priority">
-                    <th mat-header-cell *matHeaderCellDef (click)="sortTasks('priority')"> Priority <mat-icon>swap_vert</mat-icon></th>
+                    <th mat-header-cell *matHeaderCellDef (click)="sortTasks('priority')"> Priority 
+                        <mat-icon class="content-table__item">swap_vert</mat-icon></th>
                     <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="executors">
-                    <th mat-header-cell *matHeaderCellDef (click)="sortTasks('executors')"> Executors <mat-icon>swap_vert</mat-icon></th>
-                    <td mat-cell *matCellDef="let element"> <span *ngFor="let exc of element.executors">{{exc + " "}}</span> </td>
+                    <th mat-header-cell *matHeaderCellDef (click)="sortTasks('executors')"> Executors 
+                        <mat-icon class="content-table__item">swap_vert</mat-icon></th>
+                    <td mat-cell *matCellDef="let element"> <span *ngFor="let exc of element.executors">{{exc + "
+                            "}}</span> </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="headers" class="content-table__headers"></tr>

@@ -1,7 +1,7 @@
-import { User } from "./user.model";
+export type FilterStatus = 'as planned'|'at risk'|'lagging'|'';
 
 export type Filter = {
-    status: 'as planned'|'at risk'|'lagging'|'';
+    status: FilterStatus;
     executors: string[];
     deadline: Date;
 }

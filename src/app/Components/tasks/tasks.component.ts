@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TaskService } from '../../Services/task.service';
 import { Observable, defer, map } from 'rxjs';
 import { Task } from '../../Models/task.model';
-import { Filter } from '../../Models/filter.model';
+import { Filter, FilterStatus } from '../../Models/filter.model';
 import { Sort } from '../../Models/sort.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -64,7 +64,7 @@ export class TasksComponent{
     this.router.navigate(['task-info/' + id]);
   }
 
-  applyStatusFilter(status: 'as planned'|'at risk'|'lagging'|'') {
+  applyStatusFilter(status: FilterStatus) {
     this.taskService.priorityFilter$ = status;
     this.taskService.getTasks();
   }

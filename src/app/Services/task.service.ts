@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, map, shareReplay, switchMap, tap } from 'rxjs';
 import { Task } from '../Models/task.model';
-import { Filter } from '../Models/filter.model';
+import { Filter, FilterStatus } from '../Models/filter.model';
 import { Sort } from '../Models/sort.model';
 import { HttpService } from './http.service';
 
@@ -34,7 +34,7 @@ export class TaskService {
     this.filter$$.next({...this.filter$$.getValue(), deadline});
   }
 
-  set priorityFilter$(status: 'as planned'|'at risk'|'lagging'|'') {
+  set priorityFilter$(status: FilterStatus) {
     this.filter$$.next({...this.filter$$.getValue(), status});
   }
 

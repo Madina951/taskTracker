@@ -1,3 +1,4 @@
+import { FilterStatus } from "./filter.model";
 import { User } from "./user.model";
 
 export type Task = {
@@ -5,6 +6,6 @@ export type Task = {
     title: string;
     description: string;
     deadline: Date;
-    priority: 'as planned'|'at risk'|'lagging';
+    priority: FilterStatus;
     executors: string[];
 }
