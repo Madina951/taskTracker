@@ -1,0 +1,48 @@
+<div>
+    <h2>Task</h2>
+
+    <form [formGroup]="taskForm" class="taskForm">
+        <mat-form-field class="taskForm-item">
+            <mat-label>Title</mat-label>
+            <input type="text" matInput formControlName="title" placeholder="Title">
+            @if (taskForm.hasError('required')) {
+            <mat-error>Title is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field class="taskForm-item">
+            <mat-label>Deadline</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="deadline">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="taskForm-item">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+                @for (priority of priorities; track priority) {
+                <mat-option [value]="priority">{{priority}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="taskForm-item">
+            <mat-label>Executors</mat-label>
+            <mat-select formControlName="executors" multiple>
+                @for (executor of executorsList; track executor) {
+                <mat-option [value]="executor.name">{{executor.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="taskForm-item">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Ex. My description..."></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button extended (click)="saveTask()" [disabled]="taskForm.status !== 'VALID'" color="primary">Save</button>
+
+    </form>
+
+</div>
